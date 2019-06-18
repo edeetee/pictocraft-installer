@@ -21,10 +21,10 @@ apply plugin: 'edu.sc.seis.launch4j'
 apply plugin: "com.github.ben-manes.versions"
 
 sourceCompatibility = 1.8
-version = '0.5.0'
+version = '0.1'
 archivesBaseName = "pictocraft-installer"
 
-// Fetch build number from Jenkins
+// Fetch build number from Jenkins~1
 def ENV = System.getenv()
 if (ENV.BUILD_NUMBER) {
     version = version + "." + "${System.getenv().BUILD_NUMBER}"
