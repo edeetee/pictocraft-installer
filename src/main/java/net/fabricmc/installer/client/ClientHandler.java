@@ -20,9 +20,14 @@ import net.fabricmc.installer.Handler;
 import net.fabricmc.installer.InstallerGui;
 import net.fabricmc.installer.util.ArgumentParser;
 import net.fabricmc.installer.util.InstallerProgress;
+import net.fabricmc.installer.util.PictocraftUtil;
 import net.fabricmc.installer.util.Utils;
+import net.fabricmc.installer.util.PictocraftUtil.Release;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.MessageFormat;
@@ -30,6 +35,8 @@ import java.text.MessageFormat;
 public class ClientHandler extends Handler {
 
 	private JCheckBox createProfile;
+	private JCheckBox installPictocraft;
+	private JCheckBox installModMenu;
 
 	@Override
 	public String name() {
@@ -86,6 +93,13 @@ public class ClientHandler extends Handler {
 	@Override
 	public void setupPane2(JPanel pane, InstallerGui installerGui) {
 		addRow(pane, jPanel -> jPanel.add(createProfile = new JCheckBox(Utils.BUNDLE.getString("option.create.profile"), true)));
+
+		addRow(pane, jPanel -> jPanel.add(installPictocraft = 
+			new JCheckBox(Utils.BUNDLE.getString("option.create.pictocraft") + " (" + PictocraftUtil.latestRelease.tag_name + ")", true)));
+		installPictocraft.addChangeListener((ChangeEvent e) -> PictocraftUtil.isSelected = installPictocraft.isSelected());
+
+		addRow(pane, jPanel -> jPanel.add(installModMenu = new JCheckBox(Utils.BUNDLE.getString("option.create.modmenu"), true)));
+		installModMenu.addChangeListener((ChangeEvent e) -> PictocraftUtil.installModMenu = installModMenu.isSelected());
 
 		installLocation.setText(Utils.findDefaultInstallDir().getAbsolutePath());
 	}

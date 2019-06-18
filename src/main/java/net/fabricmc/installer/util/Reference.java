@@ -22,4 +22,5 @@ public class Reference {
 	public static final String PACKAGE = "net/fabricmc";
 	public static final String LOADER_NAME = "fabric-loader";
 	public static final String MAPPINGS_NAME = "intermediary";
+	public static final String PICTOCRAFT_NAME = "fabric with Pictocraft";
 }

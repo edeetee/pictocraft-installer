@@ -20,7 +20,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -100,6 +103,12 @@ public class Utils {
 		return new String(Files.readAllBytes(file.toPath()));
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param file if a directory, filename is generated from url
+	 * @throws IOException
+	 */
 	public static void downloadFile(URL url, File file) throws IOException {
 		if (!file.getParentFile().isDirectory()) {
 			if (!file.mkdirs()) {
@@ -107,7 +116,15 @@ public class Utils {
 			}
 		}
 
-		try (InputStream in = url.openStream()) {
+		HttpURLConnection con = (HttpURLConnection)url.openConnection();
+		con.setInstanceFollowRedirects(true);
+		con.addRequestProperty("User-Agent", "Mozilla/4.0");
+		con.connect();
+
+		try (InputStream in = con.getInputStream()) {
+			if(file.isDirectory())
+				file = new File(file, FilenameUtils.getName(con.getURL().getFile()));
+			System.out.println(file.getName());
 			Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		}
 	}

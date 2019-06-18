@@ -61,6 +61,10 @@ public abstract class Handler implements InstallerProgress {
 		setupPane1(pane, installerGui);
 
 		addRow(pane, jPanel -> {
+			jPanel.add(new JLabel(Utils.BUNDLE.getString("prompt.topInfo")));
+		});
+
+		addRow(pane, jPanel -> {
 			jPanel.add(new JLabel(Utils.BUNDLE.getString("prompt.game.version")));
 			jPanel.add(gameVersionComboBox = new JComboBox<>());
 			jPanel.add(snapshotCheckBox = new JCheckBox(Utils.BUNDLE.getString("option.show.snapshots")));

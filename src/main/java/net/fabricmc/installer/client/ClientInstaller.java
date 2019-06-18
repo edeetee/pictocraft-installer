@@ -17,11 +17,31 @@
 package net.fabricmc.installer.client;
 
 import net.fabricmc.installer.util.*;
+import net.fabricmc.installer.util.PictocraftUtil.Release;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class ClientInstaller {
+	static void installMod(String deleteOld, File modsDir, URL download){
+
+		installMod(deleteOld, modsDir, download, "");
+	}
+
+	static void installMod(String deleteOld, File modsDir, URL download, String filename){
+		System.out.println("Installing " + deleteOld + " from " + download);
+		
+		for (File file : modsDir.listFiles()) {
+			if(file.getName().toLowerCase().startsWith(deleteOld))
+				file.delete();
+		}
+		try{
+			Utils.downloadFile(download, new File(modsDir, filename));
+		} catch(IOException e){
+			e.printStackTrace();
+		}
+	}
 
 	public static String install(File mcDir, String gameVersion, String loaderVersion, InstallerProgress progress) throws IOException {
 		System.out.println("Installing " + gameVersion + " with fabric " + loaderVersion);
@@ -42,6 +62,18 @@ public class ClientInstaller {
 
 		if (!profileDir.exists()) {
 			profileDir.mkdirs();
+		}
+		
+		File modsDir = new File(mcDir, "mods");
+
+		if(PictocraftUtil.isSelected){
+			Release release = PictocraftUtil.latestRelease;
+			progress.updateProgress("Installing Pictocraft");
+			installMod("pictocraft", modsDir, release.getJarUrl(), "pictocraft-"+release.tag_name+".jar");
+		}
+		if(PictocraftUtil.installModMenu){
+			progress.updateProgress("Installing ModMenu");
+			installMod("modmenu", modsDir, new URL("https://minecraft.curseforge.com/projects/modmenu/files/latest"));
 		}
 
 		/*

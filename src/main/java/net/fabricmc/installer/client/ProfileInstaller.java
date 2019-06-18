@@ -17,6 +17,8 @@
 package net.fabricmc.installer.client;
 
 import com.google.gson.JsonObject;
+
+import net.fabricmc.installer.util.PictocraftUtil;
 import net.fabricmc.installer.util.Reference;
 import net.fabricmc.installer.util.Utils;
 
@@ -38,7 +40,8 @@ public class ProfileInstaller {
 		String json = Utils.readFile(launcherProfiles);
 		JsonObject jsonObject = Utils.GSON.fromJson(json, JsonObject.class);
 		JsonObject profiles = jsonObject.getAsJsonObject("profiles");
-		String profileName = Reference.LOADER_NAME + "-" + gameVersion;
+		
+		String profileName = PictocraftUtil.isSelected ? "Pictocraft" : Reference.LOADER_NAME + "-" + gameVersion;
 
 		JsonObject profile;
 		if (profiles.has(profileName)) {
@@ -53,14 +56,14 @@ public class ProfileInstaller {
 		Utils.writeToFile(launcherProfiles, Utils.GSON.toJson(jsonObject));
 
 	}
-
+	//Bookshelf
 	private static JsonObject createProfile(String name) {
 		JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty("name", name);
 		jsonObject.addProperty("type", "custom");
 		jsonObject.addProperty("created", Utils.ISO_8601.format(new Date()));
 		jsonObject.addProperty("lastUsed", Utils.ISO_8601.format(new Date()));
-		jsonObject.addProperty("icon", "TNT");
+		jsonObject.addProperty("icon", PictocraftUtil.isSelected ? "Bookshelf" : "TNT");
 		return jsonObject;
 	}
 
