@@ -1,7 +1,5 @@
 # Pictocraft Installer
 
-## Installation
-
 ### Download the latest installer from [here](https://github.com/edeetee/pictocraft-installer/releases/latest).
 
 Choose .exe if you are on windows and .jar for Mac or Linux. You should already have Java installed for Minecraft. Simply click install on the window that pops up, then exit once it is Done.
