@@ -25,19 +25,27 @@ import java.net.URL;
 
 public class ClientInstaller {
 	static void installMod(String deleteOld, File modsDir, URL download){
-
-		installMod(deleteOld, modsDir, download, "");
+		installMod(deleteOld, modsDir, download, null);
 	}
 
 	static void installMod(String deleteOld, File modsDir, URL download, String filename){
 		System.out.println("Installing " + deleteOld + " from " + download);
 		
-		for (File file : modsDir.listFiles()) {
-			if(file.getName().toLowerCase().startsWith(deleteOld))
-				file.delete();
-		}
+		System.out.println(filename);
+		System.out.println(modsDir.getAbsolutePath());
+
+		File[] mods = modsDir.listFiles();
+		if(mods != null)
+			for (File file : mods) {
+				if(file.getName().toLowerCase().startsWith(deleteOld))
+					file.delete();
+			}
+		
+		if(filename != null)
+			modsDir = new File(modsDir, filename);
+	
 		try{
-			Utils.downloadFile(download, new File(modsDir, filename));
+			Utils.downloadFile(download, modsDir);
 		} catch(IOException e){
 			e.printStackTrace();
 		}
