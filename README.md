@@ -1,13 +1,12 @@
 # Pictocraft Installer
 
-## Installation
-
 ### Download the latest installer from [here](https://github.com/edeetee/pictocraft-installer/releases/latest).
 
 Choose .exe if you are on windows and .jar for Mac or Linux. You should already have Java installed for Minecraft. Simply click install on the window that pops up, then exit once it is Done.
 
-### When you start minecraft, select the Pictocraft profile.
+### When you start minecraft, ensure the Pictocraft profile is selected.
 ![profileexample](https://github.com/edeetee/pictocraft-installer/raw/master/imgs/profile.png)
+#### To go back to vanilla minecraft, select it from this menu.
 
 ### You're done!
 Messages sent from other players will be displayed as PCS images and the Minecraft pause screen will display information on how to connect to your touch device.
